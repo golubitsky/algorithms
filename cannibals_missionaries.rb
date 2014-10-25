@@ -155,5 +155,5 @@ p graph[:node08].to_s
 p graph[:node25].to_s
 p graph[:node31].to_s
 
-graph.bfs(:node01) #compute distance from
-p graph[:node32].distance
+graph.bfs(:node01) #compute distance from node to all other nodes
+p graph[:node32].distance #print distance from node 1 to node 32
