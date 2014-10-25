@@ -146,14 +146,14 @@ end
 graph = Graph.new #initialize Graph with all potential states stored as nodes
 
 #list all possible successors for each node
-# graph.nodes.each do |name, node|
-# 	puts "#{name}: #{node.successors}"
-# end
+graph.nodes.each do |name, node|
+	puts "#{name.capitalize}: #{node} #{node.successors}"
+end
 # no routes to or from the following 4 nodes--as expected!!!
-# p graph[:node02].to_s
-# p graph[:node08].to_s
-# p graph[:node25].to_s
-# p graph[:node31].to_s
+p graph[:node02].to_s
+p graph[:node08].to_s
+p graph[:node25].to_s
+p graph[:node31].to_s
 
 graph.bfs(:node01) #compute distance from
 p graph[:node32].distance
