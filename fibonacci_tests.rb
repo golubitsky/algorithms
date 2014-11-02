@@ -38,9 +38,11 @@ def timer(n = 10)
 	(Time.now - t)/n
 end
 
+
+
 #test iterative vs recursive v.1 vs recursive v.2
 totals = Hash.new(0)
-1000.times do
+100.times do
 	a = timer { fiberative_while(20) }
 	b = timer { fibcursive(20) }
 	c = timer { fibcursive2(20) }
@@ -54,7 +56,7 @@ puts totals
 
 #test iterative using while vs iterative using each
 totals = Hash.new(0)
-1000.times do
+100.times do
 	a = timer { fiberative_while(20) }
 	b = timer { fiberative_each(20) }
 	if a < b
@@ -64,3 +66,10 @@ totals = Hash.new(0)
 	end
 end
 puts totals
+
+#test how much slower is each compared to while
+n = 10000
+a = timer(n) { fiberative_while(20) }
+b = timer(n) { fiberative_each(20) }
+ratio = b/a
+puts "In #{n} runs computing fib(20) each takes on average #{ratio.round(2)} times longer than while."
