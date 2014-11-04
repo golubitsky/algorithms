@@ -11,16 +11,14 @@ end
 
 def fiberative_while(n) #using while loop
 	return 1 if n == 1 || n == 2
-	a = 1; b = 1; result = nil
-	i = 3
-	while i <= n
-		result = a + b
-		a = b
-		b = result
+	a, b, i = 1, 1, 3
+	until i > n
+		a, b = b, a + b
 		i += 1
 	end
-	result
+	b
 end
+
 def fiberative_each(n) #using each
 	return 1 if n == 1 || n == 2
 	a = 1; b = 1; result = nil
