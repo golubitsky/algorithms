@@ -1,3 +1,5 @@
+#http://en.wikipedia.org/wiki/Missionaries_and_cannibals_problem
+
 require 'matrix'
 
 class Graph

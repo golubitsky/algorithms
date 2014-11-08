@@ -1,3 +1,5 @@
+#http://en.wikipedia.org/wiki/Knight's_tour
+
 require 'matrix'
 #constants
 KNIGHT_MOVES = [ Vector[2, 1], 	Vector[2, -1], Vector[-2, 1], Vector[-2, -1], Vector[1, 2], Vector[1, -2], Vector[-1, 2], Vector[-1, -2]  ]
