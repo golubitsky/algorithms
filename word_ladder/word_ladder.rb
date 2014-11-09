@@ -6,37 +6,9 @@ class Graph
 
   def initialize
     @words = {}
-    build_graph
-  end
-
-  def build_graph
-    input_word_list = File.read('four_letter_words.txt').scan(/\w+/)
-    input_word_list.map!{ |word| word.downcase }
-    matches = {}
-    input_word_list.each do |word|
-      i = 0
-      while i < word.length #generate matches
-        current_match = ''
-        current_match << word[0...i]
-        current_match << "_"
-        current_match << word[i+1..-1] unless i == 3
-        if matches.keys.include?(current_match) #add word to bucket
-          matches[current_match] << word
-        else #make bucket with word
-          matches[current_match] = [word]
-        end
-        i += 1
-      end
-    end
-    matches.each do |match, words|
-      words.each do |word1|
-        words.each do|word2|
-          add_node(word1) unless @words.include?(word1)
-          add_node(word2) unless @words.include?(word2)
-          add_edge(word1, word2) unless word1 == word2
-        end
-      end
-    end
+    @input_word_list = scan_words
+    @matches = define_matches
+    populate_graph
   end
 
   def add_node(word)
@@ -68,27 +40,64 @@ class Graph
         end
       end
     end
-    "#{words[other_word].distance} steps: #{find_connections(word, other_word)}"
+    "#{words[other_word].distance} steps: #{list_connections(word, other_word)}"
   end
 
   private
 
-    def find_connections(word1, word2) #bfs helper method
-      result = "#{word2}"
-      until words[word2].pred == word1
-        pred = words[word2].pred
-        result.insert(0, "#{pred}-")
-        word2 = pred
-      end
-      result.insert(0, "#{word1}-")
-      result
-    end
+  def scan_words #init helper
+    words = File.read('four_letter_words.txt').scan(/\w+/)
+    words.map!{ |word| word.downcase }
+  end
 
-    def initialize_graph_for_search
-      words.each do |name, node|
-        node.initialize_for_search
+  def define_matches #init helper
+    matches = {}
+    @input_word_list.each do |word|
+      i = 0
+      while i < word.length #generate matches
+        current_match = ''
+        current_match << word[0...i]
+        current_match << "_"
+        current_match << word[i+1..-1] unless i == 3
+        if matches.keys.include?(current_match) #add word to bucket
+          matches[current_match] << word
+        else #make bucket with word
+          matches[current_match] = [word]
+        end
+        i += 1
       end
     end
+    matches
+  end
+
+  def populate_graph #init helper
+    @matches.each do |match, words|
+      words.each do |word1|
+        words.each do|word2|
+          add_node(word1) unless @words.include?(word1)
+          add_node(word2) unless @words.include?(word2)
+          add_edge(word1, word2) unless word1 == word2
+        end
+      end
+    end
+  end
+
+  def list_connections(word1, word2) #bfs helper
+    result = "#{word2}"
+    until words[word2].pred == word1
+      pred = words[word2].pred
+      result.insert(0, "#{pred}-")
+      word2 = pred
+    end
+    result.insert(0, "#{word1}-")
+    result
+  end
+
+  def initialize_graph_for_search #bfs helper
+    words.each do |name, node|
+      node.initialize_for_search
+    end
+  end
 
 end
 
