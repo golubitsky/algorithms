@@ -110,9 +110,31 @@ class List
   end
 
   def zip(other_list) #to_be_continued
+    current_node_this = self.head
+    if current_node_this == nil
+      return other_list.clone
+    else
+      new_list = List.new
+      current_node_that = other_list.head
+    end
+    while current_node_this || current_node_that
+      if current_node_this
+        new_list.add_end(current_node_this.data)
+        current_node_this = current_node_this.next
+      end
+      if current_node_that
+        new_list.add_end(current_node_that.data)
+        current_node_that = current_node_that.next
+      end
+    end
+    new_list
   end
 
   def inspect
+
+  end
+
+  def to_s
     arr = []
     current_node = @head
     while current_node
@@ -120,9 +142,6 @@ class List
       current_node = current_node.next
     end
     arr.join(', ') #need to insert logic for arrays/hashes stored in data
-  end
-
-  def to_s
   end
 
 end
@@ -137,19 +156,16 @@ class Node
   def to_s
     "#{@data}"
   end
-
-  def inspect
-    @data
-  end
 end
 
 a = List.new
 b = List.new
-a.add_front(1)
-a.add_end(2)
-b.add_front(3)
-b.add_end(4)
-p a.extend(b)
-p a
-p b
-a.remove(3)
+10.times { a.add_end(rand(10)) }
+10.times { b.add_front(rand(10)) }
+a.extend(b)
+p a.count
+p b.count
+a.extend!(b)
+p a.count
+p b.count
+p a.to_s
